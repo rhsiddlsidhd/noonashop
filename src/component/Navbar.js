@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -7,16 +7,23 @@ import {
   faSearch,
   faShoppingBag,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
+import { productActions } from "../action/productAction";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const { cartItemCount } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
+  const [query] = useSearchParams();
+  const { productList } = useSelector((state) => state.product);
+  // const [searchQuery, setSearchQuery] = useState({
+  //   name: query.get("name") || "",
+  //   page: query.get("page") || 1,
+  // });
   const menuList = [
     "여성",
     "Divided",
@@ -37,9 +44,17 @@ const Navbar = ({ user }) => {
       navigate(`?name=${event.target.value}`);
     }
   };
+
+  useEffect(() => {
+    const name = query.get("name");
+
+    dispatch(productActions.getProductList(name));
+  }, [dispatch, query]);
+
   const logout = () => {
     dispatch(userActions.logout());
   };
+
   return (
     <div>
       {showSearchBox && (
