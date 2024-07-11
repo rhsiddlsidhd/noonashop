@@ -13,8 +13,6 @@ const ProductAll = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const error = useSelector((state) => state.product.error);
 
-  // 처음 로딩하면 상품리스트 불러오기
-
   /**
    * 페이지 렌더링시에
    * 이미 호출해서 store에 저장되어 있는 data를 가져와서
@@ -29,11 +27,19 @@ const ProductAll = () => {
    * main페이지 렌더링시에는 redux store가 비어있음
    * 그러면 후자를 선택하여 getProductList를 해야함
    */
+
+  const filterData = productList.filter((data) => !data.isDelete);
+
   useEffect(() => {
     const query = {
       name: searchParams.get("name") || "",
       page: searchParams.get("page") || 1,
     };
+    /**
+     * 쿼리 뿐만 아니라 isDelete가 관리자 페이지에서 활성화 되었을때
+     * 메인페이지에서도 바로 적용될수 있도록
+     * isDelete를 추적
+     */
 
     dispatch(productActions.getProductList(query));
   }, [dispatch, searchParams]);
@@ -51,7 +57,7 @@ const ProductAll = () => {
     <Container>
       <Row>
         <Col md={3} sm={12}>
-          <ProductCard productList={productList} />
+          <ProductCard filterData={filterData} />
         </Col>
       </Row>
       <ReactPaginate

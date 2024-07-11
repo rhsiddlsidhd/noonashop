@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { currencyFormat } from "../utils/number";
 const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
+  // const filterData = data.filter((item) => !item.isDelete);
   return (
     <div className="overflow-x">
       <Table striped bordered hover>
@@ -33,14 +34,25 @@ const ProductTable = ({ header, data, deleteItem, openEditForm }) => {
                 </th>
                 <th>{item.status}</th>
                 <th style={{ minWidth: "100px" }}>
-                  <Button
-                    size="sm"
-                    variant="danger"
-                    onClick={() => deleteItem(item._id)}
-                    className="mr-1"
-                  >
-                    -
-                  </Button>
+                  {item.isDelete ? (
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={() => deleteItem(item._id)}
+                      className="mr-1"
+                    >
+                      UnDelete
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={() => deleteItem(item._id)}
+                      className="mr-1"
+                    >
+                      delete
+                    </Button>
+                  )}
                   <Button size="sm" onClick={() => openEditForm(item)}>
                     Edit
                   </Button>
