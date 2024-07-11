@@ -17,7 +17,7 @@ const getProductList = (query) => async (dispatch) => {
     if (res.status !== 200) {
       throw new Error(res.error);
     }
-    console.log("kskskd", res.data);
+
     dispatch({ type: types.PRODUCT_GET_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: types.PRODUCT_GET_FAIL, payload: err.error });

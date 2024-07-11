@@ -23,7 +23,7 @@ const ProductCard = ({ productList }) => {
           </div>
         ))
       ) : (
-        <div>loading...</div>
+        <div>No Data...</div>
       )}
     </>
   );

@@ -18,12 +18,7 @@ const Navbar = ({ user }) => {
   const { cartItemCount } = useSelector((state) => state.cart);
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
-  const [query] = useSearchParams();
-  const { productList } = useSelector((state) => state.product);
-  // const [searchQuery, setSearchQuery] = useState({
-  //   name: query.get("name") || "",
-  //   page: query.get("page") || 1,
-  // });
+
   const menuList = [
     "여성",
     "Divided",
@@ -44,12 +39,6 @@ const Navbar = ({ user }) => {
       navigate(`?name=${event.target.value}`);
     }
   };
-
-  useEffect(() => {
-    const name = query.get("name");
-
-    dispatch(productActions.getProductList(name));
-  }, [dispatch, query]);
 
   const logout = () => {
     dispatch(userActions.logout());
