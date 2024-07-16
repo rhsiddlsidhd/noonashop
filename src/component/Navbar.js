@@ -12,10 +12,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
 import { productActions } from "../action/productAction";
+import { cartActions } from "../action/cartAction";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const { cartItemCount } = useSelector((state) => state.cart);
+  /**쇼핑백 page에 들어가야만 데이터를 조회하여  cartItemCount 을 가져옴  */
+
   const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
   const [showSearchBox, setShowSearchBox] = useState(false);
 

@@ -7,6 +7,7 @@ import ToastMessage from "../component/ToastMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
 import { commonUiActions } from "../action/commonUiAction";
+import { cartActions } from "./../action/cartAction";
 
 const AppLayout = ({ children }) => {
   const location = useLocation();
@@ -15,10 +16,17 @@ const AppLayout = ({ children }) => {
   // const user = { level: "admin" }; // 로그인 기능 만들고 지우기
 
   const { user } = useSelector((state) => state.user);
+  const { cartList } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(userActions.loginWithToken());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(cartActions.getCartQty());
+    }
+  }, [user, dispatch, cartList]);
 
   return (
     <div>

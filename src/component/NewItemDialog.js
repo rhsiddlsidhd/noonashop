@@ -54,7 +54,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       setShowDialog(false);
     } else {
       // 상품 수정하기
-      console.log(selectedProduct);
 
       dispatch(
         productActions.editProduct(

@@ -12,7 +12,7 @@ const ProductAll = () => {
   const { productList, totalPageNum } = useSelector((state) => state.product);
   const [searchParams, setSearchParams] = useSearchParams();
   const error = useSelector((state) => state.product.error);
-
+  const name = searchParams.get("name");
   /**
    * 페이지 렌더링시에
    * 이미 호출해서 store에 저장되어 있는 data를 가져와서
@@ -27,8 +27,6 @@ const ProductAll = () => {
    * main페이지 렌더링시에는 redux store가 비어있음
    * 그러면 후자를 선택하여 getProductList를 해야함
    */
-
-  const filterData = productList.filter((data) => !data.isDelete);
 
   useEffect(() => {
     const query = {
@@ -56,9 +54,21 @@ const ProductAll = () => {
   return (
     <Container>
       <Row>
-        <Col md={3} sm={12}>
-          <ProductCard filterData={filterData} />
-        </Col>
+        {productList.length > 0 ? (
+          productList.map((item) => (
+            <Col md={3} sm={12} key={item._id}>
+              <ProductCard item={item} />
+            </Col>
+          ))
+        ) : (
+          <div className="text-align-center empty-bag">
+            <h2>
+              {name
+                ? `${name}과 일치한 상품이 없습니다.`
+                : `등록된 상품이 없습니다.`}
+            </h2>
+          </div>
+        )}
       </Row>
       <ReactPaginate
         onPageChange={handlePageClick}

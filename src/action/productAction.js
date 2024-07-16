@@ -66,8 +66,10 @@ const deleteProduct = (id) => async (dispatch) => {
     if (res.status !== 200) {
       throw new Error("deleteProduct api fail");
     }
+
     dispatch({ type: types.PRODUCT_DELETE_SUCCESS });
-    dispatch(getProductList({ page: 1, name: "" }));
+    dispatch(commonUiActions.showToastMessage("상품 삭제 완료", "success"));
+    dispatch(getProductList({ page: 1 }));
   } catch (err) {
     dispatch({ type: types.PRODUCT_DELETE_FAIL, payload: err.error });
     dispatch(commonUiActions.showToastMessage(err.error, "error"));
