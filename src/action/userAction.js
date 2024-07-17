@@ -44,7 +44,7 @@ const loginWithEmail =
     }
   };
 
-const logout = () => async (dispatch) => {
+const logout = (navigate) => async (dispatch) => {
   /**
    * 유효하지않은 토큰이 존재하거나 또는 토큰이 존재하는경우
    * 토큰값을 지워준다
@@ -52,6 +52,7 @@ const logout = () => async (dispatch) => {
    */
   dispatch({ type: types.LOGOUT });
   sessionStorage.removeItem("token");
+  navigate("/");
 };
 
 const loginWithGoogle = (token) => async (dispatch) => {};

@@ -6,13 +6,15 @@ import { cartActions } from "../action/cartAction";
 import CartProductCard from "../component/CartProductCard";
 import OrderReceipt from "../component/OrderReceipt";
 import "../style/cart.style.css";
+import { useNavigate } from "react-router";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartList, totalPrice, cartItemCount } = useSelector(
     (state) => state.cart
   );
-
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     //카트리스트 불러오기
     /**
@@ -21,6 +23,9 @@ const CartPage = () => {
      *2)items.size qty 보여주기
      *
      */
+    if (!user) {
+      navigate("/login");
+    }
     dispatch(cartActions.getCartList());
   }, [dispatch, cartItemCount, totalPrice]);
 

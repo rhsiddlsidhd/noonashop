@@ -64,7 +64,7 @@ const deleteProduct = (id) => async (dispatch) => {
     dispatch({ type: types.PRODUCT_DELETE_REQUEST });
     const res = await api.delete(`product/${id}`);
     if (res.status !== 200) {
-      throw new Error("deleteProduct api fail");
+      throw new Error(res.error);
     }
 
     dispatch({ type: types.PRODUCT_DELETE_SUCCESS });

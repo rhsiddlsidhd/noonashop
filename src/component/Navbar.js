@@ -16,6 +16,7 @@ import { cartActions } from "../action/cartAction";
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItemCount } = useSelector((state) => state.cart);
   /**쇼핑백 page에 들어가야만 데이터를 조회하여  cartItemCount 을 가져옴  */
 
@@ -33,7 +34,7 @@ const Navbar = ({ user }) => {
     "지속가능성",
   ];
   let [width, setWidth] = useState(0);
-  let navigate = useNavigate();
+
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
       if (event.target.value === "") {
@@ -44,7 +45,7 @@ const Navbar = ({ user }) => {
   };
 
   const logout = () => {
-    dispatch(userActions.logout());
+    dispatch(userActions.logout(navigate));
   };
 
   return (
