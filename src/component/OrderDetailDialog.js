@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Modal, Button, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,6 +16,7 @@ const OrderDetailDialog = ({ open, handleClose }) => {
     setOrderStatus(event.target.value);
   };
   const submitStatus = () => {
+    // 데이터 상태변경
     dispatch(orderActions.updateOrder(selectedOrder._id, orderStatus));
     handleClose();
   };

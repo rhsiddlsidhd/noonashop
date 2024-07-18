@@ -12,8 +12,11 @@ import ProductTable from "../component/ProductTable";
 import api from "../utils/api";
 
 const AdminProduct = () => {
-  const { productList, totalPageNum } = useSelector((state) => state.product);
+  const { productList, totalPageNum, error } = useSelector(
+    (state) => state.product
+  );
   const navigate = useNavigate();
+
   /**
    * useSearchParams
    * URL에서 쿼리문자열을 일고 수정하는데 사용
@@ -83,8 +86,8 @@ const AdminProduct = () => {
   };
 
   useEffect(() => {
-    dispatch(productActions.getProductList({ ...searchQuery }));
-  }, [dispatch, searchQuery, query]);
+    dispatch(productActions.getAdminProductList({ ...searchQuery }, navigate));
+  }, [dispatch, searchQuery, query, navigate]);
 
   return (
     <div className="locate-center">

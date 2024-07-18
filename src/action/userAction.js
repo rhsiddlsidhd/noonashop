@@ -2,7 +2,7 @@ import api from "../utils/api";
 import * as types from "../constants/user.constants";
 import { commonUiActions } from "./commonUiAction";
 import * as commonTypes from "../constants/commonUI.constants";
-const loginWithToken = () => async (dispatch) => {
+const loginWithToken = (navigate) => async (dispatch) => {
   /**
    * 새로고침시에 user가 풀림 왜 ?
    * reducer로 user state를 관리하기때문에
@@ -50,9 +50,9 @@ const logout = (navigate) => async (dispatch) => {
    * 토큰값을 지워준다
    * 토큰 + state 의 user 상태값도 null값으로 전환
    */
+
   dispatch({ type: types.LOGOUT });
   sessionStorage.removeItem("token");
-  navigate("/");
 };
 
 const loginWithGoogle = (token) => async (dispatch) => {};

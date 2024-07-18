@@ -14,7 +14,8 @@ const AdminOrderPage = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
-  const orderList = useSelector((state) => state.order.orderList);
+
+  const { orderList } = useSelector((state) => state.order);
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     ordernum: query.get("ordernum") || "",
@@ -33,18 +34,24 @@ const AdminOrderPage = () => {
   ];
 
   useEffect(() => {
-    dispatch(orderActions.getOrderList({ ...searchQuery }));
-  }, [searchQuery, dispatch]);
+    dispatch(orderActions.getOrderList({ ...searchQuery }, navigate));
+  }, [searchQuery, dispatch, navigate]);
 
   useEffect(() => {
+    /**
+     * admin order 페이지에 들어오면
+     *
+     * 검색기능과 페이지네이션 O
+     *
+     * URL 변경
+     */
     if (searchQuery.ordernum === "") {
       delete searchQuery.ordernum;
     }
     const params = new URLSearchParams(searchQuery);
     const queryString = params.toString();
-
-    navigate("?" + queryString);
-  }, [searchQuery]);
+    navigate(`?${queryString}`);
+  }, [searchQuery, navigate]);
 
   const openEditForm = (order) => {
     setOpen(true);

@@ -33,19 +33,31 @@ const getOrder = () => async (dispatch) => {
   }
 };
 
+/**
+ * admin page 이므로
+ *level= admin 이 아닐경우 메인페이지로 이동
+ */
+
 const getOrderList = (query) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_ORDER_LIST_REQUEST });
 
-    const res = await api.get("/order", { params: { ...query } });
-    console.log("res", res);
-    dispatch({ type: types.GET_ORDER_LIST_SUCCESS });
+    const res = await api.get("/order/admin", { params: { ...query } });
+    dispatch({ type: types.GET_ORDER_LIST_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: types.GET_ORDER_LIST_FAIL, payload: err.message });
   }
 };
 
-const updateOrder = (id, status) => async (dispatch) => {};
+const updateOrder = (id, status) => async (dispatch) => {
+  try {
+    dispatch({ type: types.UPDATE_ORDER_REQUEST });
+    console.log(id);
+
+    const res = await api.put(`/order/admin/${id}`, { status });
+    console.log(res);
+  } catch (err) {}
+};
 
 export const orderActions = {
   createOrder,

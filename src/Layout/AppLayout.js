@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Col, Row } from "react-bootstrap";
 import Sidebar from "../component/Sidebar";
 import Navbar from "../component/Navbar";

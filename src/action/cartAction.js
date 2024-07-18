@@ -95,7 +95,8 @@ const getCartQty = () => async (dispatch) => {
     dispatch({ type: types.GET_CART_QTY_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch({ type: types.GET_CART_QTY_FAIL, payload: err.error });
-    dispatch(commonUiActions.showToastMessage(err.error, "error"));
+    /**카트가 비어있음을 클라이언트에게 에러로 알려줄 필요가 없음 */
+    // dispatch(commonUiActions.showToastMessage(err.error, "error"));
   }
 };
 
