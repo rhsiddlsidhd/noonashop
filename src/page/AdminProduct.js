@@ -16,6 +16,11 @@ const AdminProduct = () => {
     (state) => state.product
   );
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
+
+  if (!user || user.level !== "admin") {
+    navigate("/");
+  }
 
   /**
    * useSearchParams
@@ -86,8 +91,8 @@ const AdminProduct = () => {
   };
 
   useEffect(() => {
-    dispatch(productActions.getAdminProductList({ ...searchQuery }, navigate));
-  }, [dispatch, searchQuery, query, navigate]);
+    dispatch(productActions.getAdminProductList({ ...searchQuery }));
+  }, [dispatch, searchQuery, query]);
 
   return (
     <div className="locate-center">

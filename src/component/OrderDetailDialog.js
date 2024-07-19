@@ -15,8 +15,10 @@ const OrderDetailDialog = ({ open, handleClose }) => {
   const handleStatusChange = (event) => {
     setOrderStatus(event.target.value);
   };
-  const submitStatus = () => {
+
+  const submitStatus = (event) => {
     // 데이터 상태변경
+    event.preventDefault();
     dispatch(orderActions.updateOrder(selectedOrder._id, orderStatus));
     handleClose();
   };

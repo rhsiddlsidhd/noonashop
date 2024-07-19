@@ -13,10 +13,13 @@ const MyPage = () => {
   const { orderList } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.user);
 
+  if (!user) {
+    navigate("/login");
+  } else {
+    console.log("orderList", orderList);
+  }
+
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
     dispatch(orderActions.getOrder());
   }, [dispatch]);
 

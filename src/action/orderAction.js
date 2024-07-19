@@ -2,6 +2,7 @@ import api from "../utils/api";
 import * as types from "../constants/order.constants";
 import { cartActions } from "./cartAction";
 import { commonUiActions } from "./commonUiAction";
+import { UPDATE_ORDER_SUCCESS } from "./../constants/order.constants";
 
 const createOrder = (payload, navigate) => async (dispatch) => {
   try {
@@ -13,7 +14,8 @@ const createOrder = (payload, navigate) => async (dispatch) => {
     navigate("/payment/success");
   } catch (err) {
     dispatch({ type: types.CREATE_ORDER_FAIL, payload: err.message });
-    dispatch(commonUiActions.showToastMessage(err.message, "error"));
+    dispatch(commonUiActions.showToastMessage(err.error, "error"));
+    navigate("/cart");
   }
 };
 
@@ -55,8 +57,15 @@ const updateOrder = (id, status) => async (dispatch) => {
     console.log(id);
 
     const res = await api.put(`/order/admin/${id}`, { status });
-    console.log(res);
-  } catch (err) {}
+    console.log(res.data.data);
+
+    dispatch({ type: types.UPDATE_ORDER_SUCCESS, payload: res.data });
+    dispatch(
+      commonUiActions.showToastMessage("status update Success", "success")
+    );
+  } catch (err) {
+    dispatch({ type: types.UPDATE_ORDER_FAIL, payload: err.error });
+  }
 };
 
 export const orderActions = {

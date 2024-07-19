@@ -16,6 +16,7 @@ const AdminOrderPage = () => {
   const dispatch = useDispatch();
 
   const { orderList } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.user);
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     ordernum: query.get("ordernum") || "",
@@ -33,9 +34,13 @@ const AdminOrderPage = () => {
     "Status",
   ];
 
+  if (!user || user.level !== "admin") {
+    navigate("/");
+  }
+
   useEffect(() => {
-    dispatch(orderActions.getOrderList({ ...searchQuery }, navigate));
-  }, [searchQuery, dispatch, navigate]);
+    dispatch(orderActions.getOrderList({ ...searchQuery }));
+  }, [searchQuery, dispatch]);
 
   useEffect(() => {
     /**

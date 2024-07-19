@@ -9,7 +9,7 @@ import { commonUiActions } from "./commonUiAction";
  */
 
 //MainPage
-const getProductList = (query, navigate) => async (dispatch) => {
+const getProductList = (query) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_GET_REQUEST });
 
@@ -26,12 +26,11 @@ const getProductList = (query, navigate) => async (dispatch) => {
       payload: err.error,
     });
     dispatch(commonUiActions.showToastMessage(err.error, "error"));
-    navigate("/");
   }
 };
 
 //AdminPage
-const getAdminProductList = (query, navigate) => async (dispatch) => {
+const getAdminProductList = (query) => async (dispatch) => {
   try {
     dispatch({ type: types.PRODUCT_GET_REQUEST });
 
@@ -47,8 +46,6 @@ const getAdminProductList = (query, navigate) => async (dispatch) => {
       type: types.PRODUCT_GET_FAIL,
       payload: err.error,
     });
-    dispatch(commonUiActions.showToastMessage(err.error, "error"));
-    navigate("/");
   }
 };
 //DetailPage
